@@ -1,8 +1,5 @@
-// game.js
-kaboom({
-  width: 400, // ширина будет 100% от ширины экрана
-  height: 600, // высота будет 100% от высоты экрана
-});
+/* eslint-disable no-undef */
+kaboom();
 
 const GRAVITY = 3200;
 const WIDTH = width();
@@ -11,9 +8,9 @@ const HEIGHT = height();
 const BACKGROUND_COLOR = Color.fromHex("#b6e5ea");
 const PIPE_COLOR = Color.fromHex("#74c02e");
 
-const PIPE_WIDTH_PERCENT = 10; // ширина трубы будет 10% от ширины экрана
+const PIPE_WIDTH = 64;
 const PIPE_BORDER = 4;
-const PIPE_OPEN_PERCENT = 30; // открытие между трубами будет 30% от высоты экрана
+const PIPE_OPEN = 240;
 const PIPE_MIN_HEIGHT = 60;
 
 const JUMP_FORCE = 800;
@@ -61,14 +58,14 @@ scene("game", () => {
   const createPipes = () => {
     const bottomPipeHeight = rand(
       PIPE_MIN_HEIGHT,
-      HEIGHT - PIPE_MIN_HEIGHT - (HEIGHT * PIPE_OPEN_PERCENT / 100)
+      HEIGHT - PIPE_MIN_HEIGHT - PIPE_OPEN
     );
 
-    const topPipeHeight = HEIGHT - bottomPipeHeight - (HEIGHT * PIPE_OPEN_PERCENT / 100);
+    const topPipeHeight = HEIGHT - bottomPipeHeight - PIPE_OPEN;
 
     game.add([
       pos(width(), 0),
-      rect(WIDTH * PIPE_WIDTH_PERCENT / 100, bottomPipeHeight),
+      rect(PIPE_WIDTH, bottomPipeHeight),
       color(PIPE_COLOR),
       outline(PIPE_BORDER),
       area(),
@@ -78,8 +75,8 @@ scene("game", () => {
     ]);
 
     game.add([
-      pos(WIDTH, bottomPipeHeight + (HEIGHT * PIPE_OPEN_PERCENT / 100)),
-      rect(WIDTH * PIPE_WIDTH_PERCENT / 100, topPipeHeight),
+      pos(WIDTH, bottomPipeHeight + PIPE_OPEN),
+      rect(PIPE_WIDTH, topPipeHeight),
       color(PIPE_COLOR),
       outline(PIPE_BORDER),
       area(),
