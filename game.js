@@ -1,9 +1,13 @@
+// game.js
 /* eslint-disable no-undef */
-kaboom();
+kaboom({
+  width: 400, // задаем ширину
+  height: 600, // задаем высоту
+});
 
 const GRAVITY = 3200;
-const WIDTH = width();
-const HEIGHT = height();
+const WIDTH = 400;
+const HEIGHT = 600;
 
 const BACKGROUND_COLOR = Color.fromHex("#b6e5ea");
 const PIPE_COLOR = Color.fromHex("#74c02e");
@@ -64,7 +68,7 @@ scene("game", () => {
     const topPipeHeight = HEIGHT - bottomPipeHeight - PIPE_OPEN;
 
     game.add([
-      pos(width(), 0),
+      pos(WIDTH, 0),
       rect(PIPE_WIDTH, bottomPipeHeight),
       color(PIPE_COLOR),
       outline(PIPE_BORDER),
