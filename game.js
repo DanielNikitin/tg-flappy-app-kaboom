@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 kaboom();
 
-const GRAVITY = 3200;
 const WIDTH = width();
 const HEIGHT = height();
 
@@ -13,9 +12,11 @@ const PIPE_BORDER = 4;
 const PIPE_OPEN = 240;
 const PIPE_MIN_HEIGHT = 60;
 
-const JUMP_FORCE = 800;
-const SPEED = 320;
-const CEILING = -60;
+const GRAVITY = 2500;
+const JUMP_FORCE = 700;
+const SPEED = 150;
+
+const CEILING = -60;  // потолок
 
 loadSprite("bird", "./sprites/bird.png");
 
@@ -64,30 +65,30 @@ scene("game", () => {
     const topPipeHeight = HEIGHT - bottomPipeHeight - PIPE_OPEN;
 
     game.add([
-      pos(width(), 0),
-      rect(PIPE_WIDTH, bottomPipeHeight),
+      pos(width(), 0), // начальная позиция трубы за пределами экрана по оси X
+      rect(PIPE_WIDTH, bottomPipeHeight), // создание нижней трубы
       color(PIPE_COLOR),
       outline(PIPE_BORDER),
       area(),
-      move(LEFT, SPEED),
-      offscreen({ destroy: true }),
+      move(LEFT, SPEED), // движение трубы влево со скоростью SPEED
+      offscreen({ destroy: true }), // удаление трубы, когда она выходит за пределы экрана
       "pipe",
     ]);
 
     game.add([
-      pos(WIDTH, bottomPipeHeight + PIPE_OPEN),
-      rect(PIPE_WIDTH, topPipeHeight),
+      pos(WIDTH, bottomPipeHeight + PIPE_OPEN), // начальная позиция верхней трубы за пределами экрана по оси X
+      rect(PIPE_WIDTH, topPipeHeight), // создание верхней трубы
       color(PIPE_COLOR),
       outline(PIPE_BORDER),
       area(),
-      move(LEFT, SPEED),
-      offscreen({ destroy: true }),
+      move(LEFT, SPEED), // движение трубы влево со скоростью SPEED
+      offscreen({ destroy: true }), // удаление трубы, когда она выходит за пределы экрана
       "pipe",
-      { passed: false },
+      { passed: false }, // свойство, которое указывает, прошла ли птичка эту трубу
     ]);
   };
 
-  game.loop(1, createPipes);
+  game.loop(1.5, createPipes); // каждые 1.5 игровые единицы времени спавн труб
 
   bird.onUpdate(() => {
     const birdPosY = bird.pos.y;
@@ -137,7 +138,7 @@ scene("lose", (score) => {
   add([
     text("Набрано очков: " + score),
     pos(center()),
-    scale(3),
+    scale(0.5),
     anchor("center"),
   ]);
 
