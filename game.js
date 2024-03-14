@@ -18,7 +18,7 @@ const SPEED = 150;
 
 const CEILING = -60;  // потолок
 
-loadSprite("bird", "./sprites/bird.png");
+loadSprite("bird", "./sprites/rofl.png");
 
 loadSound("score", "./sounds/score.mp3");
 loadSound("jump", "./sounds/jump.mp3");
@@ -138,7 +138,7 @@ scene("lose", (score) => {
   add([
     text("Набрано очков: " + score),
     pos(center()),
-    scale(0.5),
+    scale(1),
     anchor("center"),
   ]);
 
