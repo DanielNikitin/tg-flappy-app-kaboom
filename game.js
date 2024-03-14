@@ -27,6 +27,19 @@ loadSound("hit", "./sounds/hit.mp3");
 setGravity(GRAVITY);
 setBackground(BACKGROUND_COLOR);
 
+const randomColor = () => {
+  let color = null;
+  while (!color) {
+    try {
+      color = Color.fromHex("#" + Math.floor(Math.random()*16777215).toString(16));
+    } catch (error) {
+      console.error("Invalid color:", error);
+    }
+  }
+  return color;
+};
+ 
+
 const startGame = () => {
   go("game");
 }
@@ -57,36 +70,39 @@ scene("game", () => {
   onClick(jump);
 
   const createPipes = () => {
+    const bottomPipeColor = randomColor();
+    const topPipeColor = randomColor();
+    
     const bottomPipeHeight = rand(
       PIPE_MIN_HEIGHT,
       HEIGHT - PIPE_MIN_HEIGHT - PIPE_OPEN
     );
-
+  
     const topPipeHeight = HEIGHT - bottomPipeHeight - PIPE_OPEN;
-
+  
     game.add([
-      pos(width(), 0), // начальная позиция трубы за пределами экрана по оси X
-      rect(PIPE_WIDTH, bottomPipeHeight), // создание нижней трубы
-      color(PIPE_COLOR),
+      pos(width(), 0),
+      rect(PIPE_WIDTH, bottomPipeHeight),
+      color(bottomPipeColor), // Используйте цвет для нижней трубы
       outline(PIPE_BORDER),
       area(),
-      move(LEFT, SPEED), // движение трубы влево со скоростью SPEED
-      offscreen({ destroy: true }), // удаление трубы, когда она выходит за пределы экрана
+      move(LEFT, SPEED),
+      offscreen({ destroy: true }),
       "pipe",
     ]);
-
+  
     game.add([
-      pos(WIDTH, bottomPipeHeight + PIPE_OPEN), // начальная позиция верхней трубы за пределами экрана по оси X
-      rect(PIPE_WIDTH, topPipeHeight), // создание верхней трубы
-      color(PIPE_COLOR),
+      pos(WIDTH, bottomPipeHeight + PIPE_OPEN),
+      rect(PIPE_WIDTH, topPipeHeight),
+      color(topPipeColor), // Используйте цвет для верхней трубы
       outline(PIPE_BORDER),
       area(),
-      move(LEFT, SPEED), // движение трубы влево со скоростью SPEED
-      offscreen({ destroy: true }), // удаление трубы, когда она выходит за пределы экрана
+      move(LEFT, SPEED),
+      offscreen({ destroy: true }),
       "pipe",
-      { passed: false }, // свойство, которое указывает, прошла ли птичка эту трубу
+      { passed: false },
     ]);
-  };
+  };  
 
   game.loop(1.5, createPipes); // каждые 1.5 игровые единицы времени спавн труб
 
